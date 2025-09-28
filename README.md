@@ -1,6 +1,6 @@
 # Quicky
 
-Quicky is a simple app that lets you upload files—such as PDFs, Word documents, PowerPoints, or text files—and instantly convert them into interactive quizzes.
+Quicky is a simple app that lets you upload files—such as PDFs, Word documents, PowerPoints, or text files—and instantly convert them into interactive quizzes using AI.
 
 ## Features
 
