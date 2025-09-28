@@ -7,6 +7,7 @@ export function Convert({ spin, setSpin, fileUploaded, setFileAlert }) {
   const handleConverting = () => {
     if (fileUploaded) {
       setSpin(true);
+      
       setFileAlert();
     } else setFileAlert(<FileNotUploaded />);
   };
