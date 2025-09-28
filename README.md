@@ -16,7 +16,7 @@ Quicky is a simple app that lets you upload files—such as PDFs, Word documents
 ## How It Works
 
 1. **Upload your file:** Click the upload button and select your document.
-2. **Automatic conversion:** Quicky processes your file and generates quiz questions based on its content.
+2. **AI conversion:** Quicky processes your file and generates quiz questions based on its content by AI.
 3. **Review and take the quiz:** Instantly access your quiz, share it, or review results.
 
 ## Getting Started
