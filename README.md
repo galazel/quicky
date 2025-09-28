@@ -1,16 +1,57 @@
-# React + Vite
+# Quicky
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Quicky is a simple app that lets you upload files—such as PDFs, Word documents, PowerPoints, or text files—and instantly convert them into interactive quizzes.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Instant Quiz Generation:** Upload supported file types and get quizzes generated automatically.
+- **Supported File Formats:** 
+  - PDF (.pdf)
+  - Word Document (.doc, .docx)
+  - PowerPoint (.ppt, .pptx)
+  - Text File (.txt)
+- **Easy to Use:** Simple UI for fast file uploads and quiz creation.
+- **Customizable Quizzes:** Edit or adjust questions after quiz generation (coming soon).
 
-## React Compiler
+## How It Works
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Upload your file:** Click the upload button and select your document.
+2. **Automatic conversion:** Quicky processes your file and generates quiz questions based on its content.
+3. **Review and take the quiz:** Instantly access your quiz, share it, or review results.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/galazel/quicky.git
+   cd quicky
+   ```
+2. Install dependencies:
+   ```bash
+   # Example for Node.js
+   npm install
+   ```
+3. Start the application:
+   ```bash
+   npm start
+   ```
+   *(Adjust instructions for your tech stack if different)*
+
+## Usage
+
+- Visit the homepage.
+- Upload your file.
+- Wait for processing.
+- Take or share your quiz!
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## License
+
+MIT License
+
+## Contact
+
+If you have any questions or suggestions, feel free to open an issue or reach out via [your contact method].
