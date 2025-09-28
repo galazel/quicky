@@ -66,7 +66,6 @@ def clean_json_output(output: str) -> str:
 def generate_quiz(text: str):
     if not os.getenv("GEMINI_API_KEY"):
         return {"error": "Missing Gemini API key. Set GEMINI_API_KEY environment variable."}
-
     prompt = (
         "From the following content, create a multiple-choice quiz in JSON format. "
         "Structure: "
@@ -74,7 +73,6 @@ def generate_quiz(text: str):
         "Generate 20 questions. Return ONLY valid JSON without markdown formatting.\n\n"
         f"Content:\n{text}"
     )
-
     try:
         model = genai.GenerativeModel("gemini-2.5-flash")  
         response = model.generate_content(prompt)

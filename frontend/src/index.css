@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Shadows+Into+Light+Two&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Shadows+Into+Light+Two&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 @plugin "daisyui";
 
@@ -9,18 +9,20 @@
       hsla(0, 27%, 84%, 1) 0%,
       hsla(306, 58%, 61%, 1) 100%
     );
+    @apply w-screen h-screen flex flex-col justify-center items-center gap-10;
   }
   h1,
   h2,
   h3,
   h4,
-  h5 {
+  h5,
+  legend {
     @apply text-9xl text-white;
-     font-family: "Sour Gummy", sans-serif;
+    font-family: "Sour Gummy", sans-serif;
   }
-  p,
-  label {
+  p
+   {
     @apply text-3xl text-white;
-      font-family: "Shadows Into Light Two", cursive;
+    font-family: "Shadows Into Light Two", cursive;
   }
 }
