@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
+import time
 import PyPDF2
 from docx import Document
 from pptx import Presentation
@@ -8,15 +9,36 @@ import google.generativeai as genai
 import json
 import re
 
-
+# --- Flask setup ---
 app = Flask(__name__)
 CORS(app)
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-
+# --- Gemini setup ---
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+# Track last request to avoid hitting free tier quota (2 requests/minute)
+last_request_time = 0
+REQUEST_DELAY = 35  # seconds
+
+
+def safe_generate(model, prompt):
+    """
+    Wrapper to respect free-tier rate limits.
+    """
+    global last_request_time
+    now = time.time()
+
+    if now - last_request_time < REQUEST_DELAY:
+        wait_time = REQUEST_DELAY - (now - last_request_time)
+        print(f"⏳ Waiting {wait_time:.1f}s before next request...")
+        time.sleep(wait_time)
+
+    response = model.generate_content(prompt)
+    last_request_time = time.time()
+    return response
 
 
 def extract_text(file_path: str) -> str:
@@ -59,13 +81,21 @@ def extract_text(file_path: str) -> str:
 
     return text.strip()
 
-def clean_json_output(output: str) -> str:
 
+def clean_json_output(output: str) -> str:
+    """
+    Remove markdown code fences and extra formatting.
+    """
     return re.sub(r"^```[a-zA-Z]*\n|\n```$", "", output.strip())
 
+
 def generate_quiz(text: str):
+    """
+    Generate a quiz in JSON format from extracted text.
+    """
     if not os.getenv("GEMINI_API_KEY"):
         return {"error": "Missing Gemini API key. Set GEMINI_API_KEY environment variable."}
+
     prompt = (
         "From the following content, create a multiple-choice quiz in JSON format. "
         "Structure: "
@@ -73,9 +103,10 @@ def generate_quiz(text: str):
         "Generate 20 questions. Return ONLY valid JSON without markdown formatting.\n\n"
         f"Content:\n{text}"
     )
+
     try:
-        model = genai.GenerativeModel("gemini-2.5-flash")  
-        response = model.generate_content(prompt)
+        model = genai.GenerativeModel("gemini-2.5-flash")
+        response = safe_generate(model, prompt)
 
         quiz_text = ""
         if hasattr(response, "text") and response.text:
@@ -83,11 +114,9 @@ def generate_quiz(text: str):
         elif hasattr(response, "candidates") and response.candidates:
             quiz_text = response.candidates[0].content.parts[0].text.strip()
 
-   
         quiz_text = clean_json_output(quiz_text)
-
-
         quiz_json = json.loads(quiz_text)
+
         return quiz_json
 
     except json.JSONDecodeError:
@@ -97,8 +126,46 @@ def generate_quiz(text: str):
         return {"error": str(e)}
 
 
+def generate_quiz_title(text: str):
+    """
+    Generate a quiz title and instructions.
+    """
+    if not os.getenv("GEMINI_API_KEY"):
+        return {"error": "Missing Gemini API key. Set GEMINI_API_KEY environment variable."}
+
+    prompt = (
+        f"Generate a quiz title and instruction based on this content:\n{text}\n"
+        "Structure: "
+        "[{\"title\": \"...\", \"instruction\": \"...\"}]. "
+        "Return ONLY valid JSON."
+    )
+
+    try:
+        model = genai.GenerativeModel("gemini-2.5-flash")
+        response = safe_generate(model, prompt)
+
+        quiz_text = ""
+        if hasattr(response, "text") and response.text:
+            quiz_text = response.text.strip()
+        elif hasattr(response, "candidates") and response.candidates:
+            quiz_text = response.candidates[0].content.parts[0].text.strip()
+
+        quiz_text = clean_json_output(quiz_text)
+        quiz_json = json.loads(quiz_text)
+        return quiz_json
+
+    except json.JSONDecodeError:
+        return {"error": "Invalid JSON returned by model", "raw": quiz_text}
+    except Exception as e:
+        print(f"[ERROR] Quiz title generation failed: {e}")
+        return {"error": str(e)}
+
+
 @app.route("/upload", methods=["POST"])
 def upload_file():
+    """
+    Upload a file, extract text, and generate quiz + title.
+    """
     if "file" not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
 
@@ -106,23 +173,24 @@ def upload_file():
     if file.filename == "":
         return jsonify({"error": "No file selected"}), 400
 
-
     file_path = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(file_path)
-
 
     text = extract_text(file_path)
     if not text:
         return jsonify({"error": "Unsupported or unreadable file type"}), 400
 
     quiz = generate_quiz(text)
+    title = generate_quiz_title(text)
 
-    return jsonify({"quiz": quiz})
-
+    return jsonify({"quiz": quiz, "quiz-title": title})
 
 
 @app.route("/models", methods=["GET"])
 def list_models():
+    """
+    List available Gemini models.
+    """
     try:
         models = genai.list_models()
         available = []
