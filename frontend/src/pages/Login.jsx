@@ -3,11 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const location = useLocation();
-  const quizData = location.state
   const navigate = useNavigate()
 
   const handleSubmit = () => {
-    navigate('/quiz',{state:quizData})
+    navigate('/quiz',{state:location.state})
   };
 
   return (

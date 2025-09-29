@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Landing from '../pages/Landing'
 import Login from '../pages/Login'
-import Quiz from '../components/Quiz'
+import Quiz from '../pages/Quiz'
 
 function AppRoutes() {
   return (
