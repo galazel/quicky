@@ -23,9 +23,9 @@ export function Convert({ spin, setSpin, fileUploaded, setFileAlert, file }) {
       .post("http://127.0.0.1:9090/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((response) => {
-        console.log(response)
-        navigate('/login')
+      .then((data) => {
+        console.log(data.request.response)
+        navigate('/login',{state:data.request.response})
       })
       .catch((error) => console.log(error));
   };

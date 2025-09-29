@@ -1,10 +1,19 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const location = useLocation();
+  const quizData = location.state
+  const navigate = useNavigate()
+
+  const handleSubmit = () => {
+    navigate('/quiz',{state:quizData})
+  };
+
   return (
     <fieldset className="flex flex-col justify-center items-center gap-5 fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
       <legend className="fieldset-legend">Quicky</legend>
-      <p className = "text-black">Enter the following credentials.</p>
+      <p className="text-black">Enter the following credentials.</p>
 
       <label className="input validator">
         <svg
@@ -55,7 +64,9 @@ export default function Login() {
       </label>
       <div className="validator-hint hidden">Enter valid email address</div>
 
-      <button className="btn btn-neutral mt-4">Take the quiz</button>
+      <button className="btn btn-neutral mt-4" onClick={handleSubmit}>
+        Take the quiz
+      </button>
     </fieldset>
   );
 }
