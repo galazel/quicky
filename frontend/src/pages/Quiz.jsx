@@ -36,12 +36,10 @@ function Countdown({ initialSeconds }) {
     <span className="countdown font-mono text-2xl">{formatTime(timeLeft)}</span>
   );
 }
-
 function Quiz() {
   const location = useLocation();
   const quizData = location.state;
   const quiz = JSON.parse(quizData);
-
 
   return (
     <main className="flex flex-col gap-1 justify-center items-center mb-20">

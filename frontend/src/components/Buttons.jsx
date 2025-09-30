@@ -50,11 +50,11 @@ export function Convert({ spin, setSpin, fileUploaded, setFileAlert, file }) {
     </button>
   );
 }
-export function HandleTakeQuiz({ handleLogin }) {
+export function HandleTakeQuiz({ handleTakeQuiz }) {
   return (
     <button
       className="btn bg-black text-white border-black"
-      onClick={handleLogin}
+      onClick={handleTakeQuiz}
     >
       Take Quiz
       <FontAwesomeIcon icon={faArrowRight} />
