@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUpload,
+  faWandMagicSparkles,
+} from "@fortawesome/free-solid-svg-icons";
 import { Convert } from "../components/Buttons";
 
 function Landing() {
@@ -26,7 +29,10 @@ function Landing() {
   return (
     <main className="grid grid-4 gap-6 p-5">
       <div className="flex items-center flex-col gap-10">
-        <h1 className="animate-bounce">Quicky</h1>
+        <h1 className="animate-bounce">
+          Quicky
+          <FontAwesomeIcon icon={faWandMagicSparkles} />
+        </h1>
         <p className="text-center w-7xl">
           Quicky is a simple app that lets you upload files like PDFs, Word
           documents, PowerPoints, or text files and convert them into quizzes
@@ -51,10 +57,9 @@ function Landing() {
           setFileAlert={setFileAlert}
           file={file}
         />
-      
       </div>
       <div className="flex justify-center ">
-          {fileAlert}
+        {fileAlert}
         <input
           className="hidden"
           ref={fileRef}
