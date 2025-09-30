@@ -11,7 +11,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd } from "@fortawesome/free-solid-svg-icons";
-
+import { SubmitQuiz } from "../components/Buttons";
 
 function Countdown({ initialSeconds }) {
   const [timeLeft, setTimeLeft] = useState(initialSeconds);
@@ -41,6 +41,7 @@ function Quiz() {
   const location = useLocation();
   const quizData = location.state;
   const quiz = JSON.parse(quizData);
+
 
   return (
     <main className="flex flex-col gap-1 justify-center items-center mb-20">
@@ -72,26 +73,33 @@ function Quiz() {
                             <div className="flex gap-3" key={index}>
                               <input
                                 type="radio"
+                                name={`radio-4 choice-${key}`}
+                                className="radio border radio-info"
                                 required
-                                name={`choice-${key}`} 
                                 id={`choice-${key}-${index}`}
                               />
                               <label htmlFor={`choice-${key}-${index}`}>
                                 {item}
                               </label>
+                                
                             </div>
+                            
                           ))}
                         </div>
                       </div>
                     </CardContent>
+                  
                   </Card>
+                   { key == 19 ? <SubmitQuiz/> : ''}
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
+        
         </Carousel>
+        
       </section>
     </main>
   );

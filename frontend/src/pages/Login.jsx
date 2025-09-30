@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Error } from "../components/Alerts";
-  import { SubmitQuiz } from "../components/Buttons";
+import { HandleTakeQuiz } from "../components/Buttons";
 export default function Login() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -11,9 +11,8 @@ export default function Login() {
   const [isValidInput, setIsInvalidInput] = useState(false);
 
 
-  const handleSubmit = (event) => {
+  const handleQuiz = (event) => {
     event.preventDefault();
-
     if (username.length == 0 || email.length == 0)
       return setIsInvalidInput(true);
     else navigate("/quiz", { state: location.state });
@@ -81,7 +80,7 @@ export default function Login() {
         {isValidInput && (
           <Error message={"Please enter the required fields."} />
         )}
-       <SubmitQuiz />
+       <HandleTakeQuiz handleTakeQuiz={handleQuiz}/>
 
       </fieldset>
     </form>

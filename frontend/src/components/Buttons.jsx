@@ -50,15 +50,27 @@ export function Convert({ spin, setSpin, fileUploaded, setFileAlert, file }) {
     </button>
   );
 }
-export function SubmitQuiz() {
-  const handleSubmitQuiz = () => {};
+export function HandleTakeQuiz({ handleLogin }) {
   return (
     <button
       className="btn bg-black text-white border-black"
-      onClick={handleSubmitQuiz}
+      onClick={handleLogin}
     >
       Take Quiz
       <FontAwesomeIcon icon={faArrowRight} />
     </button>
+  );
+}
+export function SubmitQuiz({ handleSubmitQuiz }) {
+  return (
+    <div className="flex justify-end mt-5">
+      <button
+        className="btn bg-black text-white border-black "
+        onClick={handleSubmitQuiz}
+      >
+        Submit
+        <FontAwesomeIcon icon={faArrowRight} />
+      </button>
+    </div>
   );
 }
