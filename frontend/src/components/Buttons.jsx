@@ -1,31 +1,35 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner, faArrowsSpin } from "@fortawesome/free-solid-svg-icons";
-import { FileNotUploaded } from "../components/Alerts";
+import {
+  faSpinner,
+  faArrowsSpin,
+  faArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { Error } from "../components/Alerts";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export function Convert({ spin, setSpin, fileUploaded, setFileAlert, file }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleConverting = () => {
     if (fileUploaded) {
       setSpin(true);
-      console.log(file)
+      console.log(file);
       requestFromBackend(file);
       setFileAlert();
-    } else setFileAlert(<FileNotUploaded />);
+    } else setFileAlert(<Error message={"No file uploaded."} />);
   };
   const requestFromBackend = (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    console.log(formData.get('file'))
+    console.log(formData.get("file"));
     axios
       .post("http://127.0.0.1:9090/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((data) => {
-        console.log(data.request.response)
-        navigate('/login',{state:data.request.response})
+        console.log(data.request.response);
+        navigate("/login", { state: data.request.response });
       })
       .catch((error) => console.log(error));
   };
@@ -43,6 +47,18 @@ export function Convert({ spin, setSpin, fileUploaded, setFileAlert, file }) {
           Convert
         </>
       )}{" "}
+    </button>
+  );
+}
+export function SubmitQuiz() {
+  const handleSubmitQuiz = () => {};
+  return (
+    <button
+      className="btn bg-black text-white border-black"
+      onClick={handleSubmitQuiz}
+    >
+      Take Quiz
+      <FontAwesomeIcon icon={faArrowRight} />
     </button>
   );
 }

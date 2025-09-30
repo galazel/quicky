@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd } from "@fortawesome/free-solid-svg-icons";
 
+
 function Countdown({ initialSeconds }) {
   const [timeLeft, setTimeLeft] = useState(initialSeconds);
 
@@ -42,7 +43,7 @@ function Quiz() {
   const quiz = JSON.parse(quizData);
 
   return (
-    <main className="flex flex-col gap-5 justify-center items-center mb-20">
+    <main className="flex flex-col gap-1 justify-center items-center mb-20">
       <header className="flex flex-col justify-center gap-5">
         <h1 className="text-center text-4xl">{quiz["quiz-title"].title}</h1>
         <p className="text-center text-2xl w-5xl">
@@ -50,9 +51,9 @@ function Quiz() {
         </p>
       </header>
 
-      <section className="w-[50vw] h-[65vh] flex gap-10 flex-col">
+      <section className="w-[50vw] h-[65vh] flex gap-1 flex-col">
         <div className="flex items-center">
-          <FontAwesomeIcon icon={faHourglassEnd} className="animate-spin"/>
+          <FontAwesomeIcon icon={faHourglassEnd} className="animate-spin" />
           <Countdown initialSeconds={600} />
         </div>
         <Carousel className="w-full h-full">
@@ -66,15 +67,14 @@ function Quiz() {
                         <p className="text-black text-4xl">
                           {key + 1}. {element["question"]}
                         </p>
-
                         <div className="flex flex-col gap-3">
                           {element["choices"].map((item, index) => (
                             <div className="flex gap-3" key={index}>
                               <input
                                 type="radio"
                                 required
-                                name={`choice-${key}`} // unique per question
-                                id={`choice-${key}-${index}`} // unique id
+                                name={`choice-${key}`} 
+                                id={`choice-${key}-${index}`}
                               />
                               <label htmlFor={`choice-${key}-${index}`}>
                                 {item}
